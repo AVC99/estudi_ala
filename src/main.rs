@@ -1,0 +1,148 @@
+use std::io;
+use std::io::Write;
+fn main() {
+    loop {
+        let mut input = String::new();
+
+        print_menu();
+
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+        let option = input.trim().parse().expect("Please type a number!");
+
+        match option {
+            1 => {
+                fibonacci_recursive();
+            }
+            2 => fibonacci_iterative(),
+            3 => cashier_problem(),
+            4 => collatz_chain(),
+            0 => {
+                println!("Exiting ...");
+                break;
+            }
+            _ => {
+                println!("Enter a correct option")
+            }
+        }
+    }
+}
+
+fn collatz_chain() {
+    println!("The Collatz conjecture is one of the most famous unsolved problems in mathematics.");
+    println!("The conjecture asks whether repeating two simple arithmetic operations will eventually transform every positive integer into 1.");
+    println!("It concerns sequences of integers in which each term is obtained from the previous term as follows:");
+    println!("If the previous term is even, the next term is one half of the previous term.");
+    println!("If the previous term is odd, the next term is 3 times the previous term plus 1.");
+    println!("The conjecture is that these sequences always reach 1, no matter which positive integer is chosen to start the sequence.");
+
+    let number = get_number();
+    collatz(number);
+    println!("Finished collatz chain!");
+}
+fn collatz(number: u64) {
+    println!("Number : {}", number);
+    if number == 1 {
+        return;
+    } else if number % 2 == 0 {
+        collatz(number / 2);
+    } else {
+        collatz((number * 3) + 1)
+    }
+}
+
+fn cashier_problem() {
+    println!("Cashier problem!");
+    let money: [f32; 13] = [
+        500.0, 200.0, 100.0, 50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.01,
+    ]; // IMPORTANT TO ORDER IN FROM BIGGER TO SMALLER (learned that the hard way :D)
+
+    let costumer_money = get_float();
+
+    give_change(&money, costumer_money, 0);
+}
+
+fn give_change(money: &[f32], mut costumer_money: f32, index: usize) {
+    if index < money.len() {
+        if costumer_money - money[index] >= 0.0 {
+            costumer_money -= money[index];
+            println!("Givving change of: {}", money[index]);
+            give_change(money, costumer_money, index)
+        } else {
+            give_change(money, costumer_money, index + 1)
+        }
+    }
+}
+
+// should put this in a loop
+fn get_float() -> f32 {
+    println!("Enter a float value");
+    let mut input = String::new();
+    print!("Enter a number: ");
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read a line");
+    return input.trim().parse().expect("Please type a number");
+}
+
+fn fibonacci_iterative() {
+    println!("Fibonacci Iterative");
+
+    let number = get_number();
+
+    match number {
+        0 => println!("Fibonacci sequence of {number} is 0"),
+        1 => println!("Fibonacci sequence of {number} is 1"),
+        _ => {
+            let mut a: u64 = 0;
+            let mut b: u64 = 1;
+            let mut c: u64 = 0;
+
+            for _ in 1..number {
+                c = a + b;
+                a = b;
+                b = c;
+            }
+
+            println!("Fibonacci sequence of {number} is {c}");
+        }
+    }
+}
+
+fn get_number() -> u64 {
+    let mut input = String::new();
+    print!("Enter a number: ");
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read a line");
+    return input.trim().parse().expect("Please type a number");
+}
+
+fn print_menu() {
+    println!("Enter an option");
+    println!("1. Fibonacci Recursive");
+    println!("2. Fibonacci Iterative");
+    println!("3. Cashier problem");
+    println!("4. Collatz chain");
+
+    println!("0. Exit.");
+}
+
+fn fibonacci_recursive() {
+    println!("Welcome to Fibonacci Recursive");
+    let number = get_number();
+    println!("The fibonacci of {} is {}", number, fibonacci_rec(number));
+}
+
+fn fibonacci_rec(n: u64) -> u64 {
+    if n == 0 {
+        return 0;
+    }
+    if n == 1 {
+        return 1;
+    }
+    return fibonacci_rec(n - 1) + fibonacci_rec(n - 2);
+}
