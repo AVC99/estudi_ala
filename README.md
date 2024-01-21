@@ -1,5 +1,5 @@
 # ALA STUDY / LEARNING RUST
-This is a repository that i use to learn ALA and Rust.
+This is a repository that I use to learn ALA and Rust.
 ## To run the code 
 ### 1 - Install Rust
 https://www.rust-lang.org/tools/install

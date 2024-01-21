@@ -1,17 +1,12 @@
-use std::io;
+use utils::get_number;
 mod n_queens;
 mod utils;
 
 fn main() {
     loop {
-        let mut input = String::new();
-
         print_menu();
 
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read line");
-        let option = input.trim().parse().expect("Please type a number!");
+        let option = get_number();
 
         match option {
             1 => {
@@ -44,6 +39,7 @@ fn collatz_chain() {
     collatz(number);
     println!("Finished collatz chain!");
 }
+
 fn collatz(number: usize) {
     println!("Number : {}", number);
     if number == 1 || number == 0 {
@@ -96,7 +92,6 @@ fn fibonacci_iterative() {
                 a = b;
                 b = c;
             }
-
             println!("Fibonacci sequence of {number} is {c}");
         }
     }

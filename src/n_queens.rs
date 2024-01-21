@@ -9,13 +9,11 @@ pub fn run_n_queens() {
     let n = utils::get_number();
     let mut board = vec![-1; n as usize];
 
-    if backtracking(&mut board, 0, n){
+    if backtracking(&mut board, 0, n) {
         print_board(&board, n);
-    }else {
+    } else {
         println!("No solution found!");
     }
-
-    
 }
 
 //changes made in board will persist after the funciton returns
@@ -24,8 +22,8 @@ fn backtracking(mut board: &mut Vec<i32>, row: usize, n: usize) -> bool {
         return true;
     }
 
-    for col in 0..n{
-        if is_safe(&board, row, col){
+    for col in 0..n {
+        if is_safe(&board, row, col) {
             board[row] = col as i32;
 
             if backtracking(&mut board, row + 1, n) {
@@ -38,13 +36,15 @@ fn backtracking(mut board: &mut Vec<i32>, row: usize, n: usize) -> bool {
     }
 
     return false;
-
 }
 
 fn is_safe(board: &[i32], row: usize, col: usize) -> bool {
     for i in 0..row {
-        if board[i] == col as i32 || board[i] - i as i32 == col as i32 - row as i32 || board[i] + i as i32 == col as i32 + row as i32 {
-            return false
+        if board[i] == col as i32
+            || board[i] - i as i32 == col as i32 - row as i32
+            || board[i] + i as i32 == col as i32 + row as i32
+        {
+            return false;
         }
     }
     return true;
