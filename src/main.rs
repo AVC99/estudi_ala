@@ -98,13 +98,13 @@ fn fibonacci_iterative() {
 }
 
 fn print_menu() {
-    println!("Enter an option");
     println!("1. Fibonacci Recursive");
     println!("2. Fibonacci Iterative");
     println!("3. Cashier problem");
     println!("4. Collatz chain");
     println!("5. N Queens backtracking");
     println!("0. Exit.");
+    println!("Enter an option: ");
 }
 
 fn fibonacci_recursive() {
